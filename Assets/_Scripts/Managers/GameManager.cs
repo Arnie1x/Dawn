@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Application = UnityEngine.Device.Application;
 
-public class GameManager: MonoBehaviour
+public class GameManager: Singleton<GameManager>
     {
         public GameObject player;
 
