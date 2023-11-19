@@ -10,7 +10,7 @@ public class Enemy : DestructibleBase
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public float health;
+    public float health = 100;
 
     //Patrolling
     public Vector3 walkPoint;
@@ -29,10 +29,15 @@ public class Enemy : DestructibleBase
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    public override void Start() {
+        Health = 100;
+        base.Start();
+    }
     private void Awake()
     {
         // player = GameObject.Find("PlayerObj").transform;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        health = 100;
     }
 
     private void Update()

@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     // [HideInInspector] public TrailRenderer trailRenderer;
 
     // [SerializeField] private ParticleSystem impactEffect;
-    private GameObject impact;
+    // private GameObject impact;
     bool projectileReturned = false;
 
     // Instead of using a trail, use a normal particle system
@@ -34,13 +34,13 @@ public class Projectile : MonoBehaviour
     {
         // impactEffect.Play();
         // impact = Instantiate(impactEffect.gameObject, transform.position, transform.rotation);
-        Destroy(impact);
+        // Destroy(impact);
         DestructibleBase destructible = collision.gameObject.GetComponent<DestructibleBase>();
         if (destructible != null)
         {
             destructible.TakeDamage(damage);
         }
-        Destroy(gameObject, 0.1f);
+        Destroy(gameObject);
         // ReturnProjectile();
 
     }

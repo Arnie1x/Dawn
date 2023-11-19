@@ -22,8 +22,8 @@ public class AudioSystem : Singleton<AudioSystem>
         _musicSource.Play();
     }
 
-    public void PlaySound(AudioClip clip, float vol = 1)
+    public void PlaySound()
     {
-        _SFXSource.PlayOneShot(clip, vol);
+        _SFXSource.Play();
     }
 }

@@ -27,6 +27,7 @@ public class GunSystem : MonoBehaviour
     public Transform attackPoint;
     public RaycastHit rayHit;
     public LayerMask whatIsEnemy;
+    public AudioClip Clip;
 
     //Graphics
     // public GameObject muzzleFlash, bulletHoleGraphic;
@@ -57,8 +58,8 @@ public class GunSystem : MonoBehaviour
     {
         // if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         // else shooting = Input.GetKeyDown(KeyCode.Mouse0);
-        shooting = controls.attackAction.ReadValue<float>() > 0;
-        // shooting = true;
+        // shooting = controls.attackAction.ReadValue<float>() > 0;
+        shooting = true;
 
         if (controls.reloadAction.ReadValue<float>() > 0 && bulletsLeft < magazineSize && !reloading) Reload();
 
@@ -81,6 +82,7 @@ public class GunSystem : MonoBehaviour
 
             projectile.GetComponent<Projectile>().damage = attackDamage;
             ///End of attack code
+            AudioSystem.Instance.PlaySound();
 
             alreadyAttacked = true;
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
