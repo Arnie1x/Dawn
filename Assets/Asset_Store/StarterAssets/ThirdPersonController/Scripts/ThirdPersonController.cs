@@ -149,7 +149,7 @@ namespace StarterAssets
         private void Update()
         {
             _hasAnimator = TryGetComponent(out _animator);
-
+            if(GameManager.Instance.State != GameState.Playing) return;
             JumpAndGravity();
             GroundedCheck();
             Move();
@@ -382,6 +382,9 @@ namespace StarterAssets
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
+        }
+        public override void Die(){
+            GameManager.Instance.UpdateGameState(GameState.Dead);
         }
     }
 }

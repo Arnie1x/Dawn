@@ -18,7 +18,7 @@ public class Pause : MonoBehaviour
     void Update()
     {
         if(controls.pauseAction.ReadValue<float>() > 0) {
-            if(manager.State == GameState.Playing){
+            if(manager.State == GameState.Playing && manager.State != GameState.Dead){
                 manager.UpdateGameState(GameState.Paused);
                 return;
             }

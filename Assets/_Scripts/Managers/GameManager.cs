@@ -11,6 +11,7 @@ public class GameManager: Singleton<GameManager>
         public GameState State { get; private set; }
 
         public static event Action<GameState> OnGameStateChanged;
+        public GameObject gameOverPrefab;
 
         private void Start()
         {
@@ -40,9 +41,6 @@ public class GameManager: Singleton<GameManager>
                 case GameState.Dead:
                     HandleDead();
                     break;
-                case GameState.Lose:
-                    HandleLose();
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
             }
@@ -53,26 +51,31 @@ public class GameManager: Singleton<GameManager>
         {
             UpdateGameState(GameState.Playing);
             Time.timeScale = 1;
+            Cursor.visible = true;
         }
         private void HandleMenu()
         {
             Time.timeScale = 1;
+            gameOverPrefab.SetActive(false);
+            Cursor.visible = true;
         }
         private void HandlePlaying()
         {
             Time.timeScale = 1;
+            gameOverPrefab.SetActive(false);
+            Cursor.visible = false;
         }
         private void HandlePaused()
         {
             Time.timeScale = 0;
+            gameOverPrefab.SetActive(false);
+            Cursor.visible = true;
         }
         private void HandleDead()
         {
-            Time.timeScale = 1;
-        }
-        private void HandleLose()
-        {
-            Time.timeScale = 1;
+            Time.timeScale = 0;
+            gameOverPrefab.SetActive(true);
+            Cursor.visible = true;
         }
     }
 
@@ -82,6 +85,4 @@ public enum GameState
     Menu,
     Playing,
     Paused,
-    Dead,
-    Lose
-}
+    Dead}
