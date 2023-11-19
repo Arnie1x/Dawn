@@ -51,27 +51,28 @@ public class GameManager: Singleton<GameManager>
 
         private void HandleStarting()
         {
-            UpdateGameState(GameState.Menu);
+            UpdateGameState(GameState.Playing);
+            Time.timeScale = 1;
         }
         private void HandleMenu()
         {
-
+            Time.timeScale = 1;
         }
         private void HandlePlaying()
         {
-
+            Time.timeScale = 1;
         }
         private void HandlePaused()
         {
-
+            Time.timeScale = 0;
         }
         private void HandleDead()
         {
-
+            Time.timeScale = 1;
         }
         private void HandleLose()
         {
-
+            Time.timeScale = 1;
         }
     }
 

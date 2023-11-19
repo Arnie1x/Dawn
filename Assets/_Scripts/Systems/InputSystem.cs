@@ -15,6 +15,7 @@ public class InputSystem : Singleton<InputSystem>
     public InputAction jumpAction;
     public InputAction attackAction;
     public InputAction reloadAction;
+    public InputAction pauseAction;
 
     protected override void Awake()
     {
@@ -26,6 +27,7 @@ public class InputSystem : Singleton<InputSystem>
         jumpAction = _input.actions["Jump"];
         attackAction = _input.actions["Attack"];
         reloadAction = _input.actions["Reload"];
+        pauseAction = _input.actions["Pause"];
 
         //if (controls == null)
         //{
