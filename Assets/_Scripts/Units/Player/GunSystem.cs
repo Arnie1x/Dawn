@@ -11,8 +11,16 @@ public class GunSystem : MonoBehaviour
     public bool allowButtonHold;
     int bulletsLeft, bulletsShot;
 
+    public GameObject shootPoint;
+    public GameObject projectile;
+
+    public float attackSpeed = 8f;
+    public float timeBetweenAttacks = 2f;
+    public int attackDamage = 10;
+
+
     //bools
-    bool shooting, readyToShoot, reloading;
+    bool shooting, readyToShoot, reloading, alreadyAttacked;
 
     //Reference
     public Camera fpsCam;
@@ -49,7 +57,8 @@ public class GunSystem : MonoBehaviour
     {
         // if (allowButtonHold) shooting = Input.GetKey(KeyCode.Mouse0);
         // else shooting = Input.GetKeyDown(KeyCode.Mouse0);
-        shooting = controls.attackAction.ReadValue<float>() > 0;
+        // shooting = controls.attackAction.ReadValue<float>() > 0;
+        shooting = true;
 
         if (controls.reloadAction.ReadValue<float>() > 0 && bulletsLeft < magazineSize && !reloading) Reload();
 
@@ -62,41 +71,26 @@ public class GunSystem : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void Shoot()
     {
-        readyToShoot = false;
-
-        //Spread
-        float x = Random.Range(-spread, spread);
-        float y = Random.Range(-spread, spread);
-
-        //Calculate Direction with Spread
-        Vector3 direction = fpsCam.transform.forward + new Vector3(x, y, 0);
-
-        //RayCast
-        if (Physics.Raycast(fpsCam.transform.position, direction, out rayHit, range, whatIsEnemy))
+        if (!alreadyAttacked)
         {
-            Debug.Log(rayHit.collider.name, this);
+            ///Attack code here
+            GameObject _projectile = Instantiate(projectile, shootPoint.transform.position, Quaternion.identity);
+            Rigidbody rb = _projectile.GetComponent<Rigidbody>();
+            rb.AddForce(fpsCam.transform.forward * attackSpeed, ForceMode.Impulse);
+            // rb.AddForce(transform.up, ForceMode.Impulse);
 
-            if (rayHit.collider.CompareTag("Enemy"))
-                Debug.Log("Enemy damaged", this);
-                // rayHit.collider.GetComponent<ShootingAi>().TakeDamage(damage);
-                // Add Damage to Destructible
+            projectile.GetComponent<Projectile>().damage = attackDamage;
+            ///End of attack code
+
+            alreadyAttacked = true;
+            Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
-
-        //ShakeCamera
-        // camShake.Shake(camShakeDuration, camShakeMagnitude);
-
-        //Graphics
-        // Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-        // Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
-
-        bulletsLeft--;
-        bulletsShot--;
-
-        Invoke("ResetShot", timeBetweenShooting);
-
-        if(bulletsShot > 0 && bulletsLeft > 0)
-        Invoke("Shoot", timeBetweenShots);
     }
+    private void ResetAttack()
+    {
+        alreadyAttacked = false;
+    }
+
     private void ResetShot()
     {
         readyToShoot = true;

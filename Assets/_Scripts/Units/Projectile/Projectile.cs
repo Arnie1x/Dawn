@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
     {
         // impactEffect.Play();
         // impact = Instantiate(impactEffect.gameObject, transform.position, transform.rotation);
-        Destroy(impact, 3f);
+        Destroy(impact);
         DestructibleBase destructible = collision.gameObject.GetComponent<DestructibleBase>();
         if (destructible != null)
         {
