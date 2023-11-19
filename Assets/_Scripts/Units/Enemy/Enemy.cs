@@ -113,6 +113,9 @@ public class Enemy : DestructibleBase
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
+    public override void Die() {
+        Destroy(gameObject);
+    }
 }
 
 
