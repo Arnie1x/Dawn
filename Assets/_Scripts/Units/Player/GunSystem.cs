@@ -21,9 +21,9 @@ public class GunSystem : MonoBehaviour
     public LayerMask whatIsEnemy;
 
     //Graphics
-    public GameObject muzzleFlash, bulletHoleGraphic;
+    // public GameObject muzzleFlash, bulletHoleGraphic;
     // public CamShake camShake;
-    public float camShakeMagnitude, camShakeDuration;
+    // public float camShakeMagnitude, camShakeDuration;
     // public TextMeshProUGUI text;
 
     // Input
@@ -51,7 +51,7 @@ public class GunSystem : MonoBehaviour
         // else shooting = Input.GetKeyDown(KeyCode.Mouse0);
         shooting = controls.attackAction.ReadValue<float>() > 0;
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading) Reload();
+        if (controls.reloadAction.ReadValue<float>() > 0 && bulletsLeft < magazineSize && !reloading) Reload();
 
         //Shoot
         if (readyToShoot && shooting && !reloading && bulletsLeft > 0){
@@ -86,8 +86,8 @@ public class GunSystem : MonoBehaviour
         // camShake.Shake(camShakeDuration, camShakeMagnitude);
 
         //Graphics
-        Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
-        Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
+        // Instantiate(bulletHoleGraphic, rayHit.point, Quaternion.Euler(0, 180, 0));
+        // Instantiate(muzzleFlash, attackPoint.position, Quaternion.identity);
 
         bulletsLeft--;
         bulletsShot--;

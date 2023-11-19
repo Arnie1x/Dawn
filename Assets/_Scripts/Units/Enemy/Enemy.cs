@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : DestructibleBase
 {
     private UnityEngine.AI.NavMeshAgent agent;
 
@@ -19,7 +19,10 @@ public class Enemy : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
+    public float attackSpeed = 5f;
+    public int attackDamage = 0;
+    public bool alreadyAttacked;
+    public GameObject shootPoint;
     public GameObject projectile;
 
     //States
@@ -86,9 +89,12 @@ public class Enemy : MonoBehaviour
         if (!alreadyAttacked)
         {
             ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            GameObject _projectile = Instantiate(projectile, shootPoint.transform.position, Quaternion.identity);
+            Rigidbody rb = _projectile.GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * attackSpeed, ForceMode.Impulse);
+            // rb.AddForce(transform.up, ForceMode.Impulse);
+
+            projectile.GetComponent<Projectile>().damage = attackDamage;
             ///End of attack code
 
             alreadyAttacked = true;

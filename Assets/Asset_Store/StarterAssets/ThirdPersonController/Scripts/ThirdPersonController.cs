@@ -120,6 +120,10 @@ namespace StarterAssets
         private void Awake()
         {
             controls = InputSystem.Instance;
+
+            // Set health
+            Health = health;
+
             // get a reference to our main camera
             if (_mainCamera == null)
             {
@@ -127,8 +131,9 @@ namespace StarterAssets
             }
         }
 
-        private void Start()
+        public override void Start()
         {
+            base.Start();
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
             
             _hasAnimator = TryGetComponent(out _animator);
@@ -139,9 +144,6 @@ namespace StarterAssets
             // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-
-            // Set health
-            Health = health;
         }
 
         private void Update()
